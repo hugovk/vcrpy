@@ -6,6 +6,7 @@ import logging
 
 import wrapt
 
+from asyncio import iscoroutinefunction
 from .compat import contextlib
 from .errors import UnhandledHTTPRequestError
 from .matchers import requests_match, uri, method
@@ -13,18 +14,8 @@ from .patch import CassettePatcherBuilder
 from .serializers import yamlserializer
 from .persisters.filesystem import FilesystemPersister
 from .util import partition_dict
+from ._handle_coroutine import handle_coroutine
 
-try:
-    from asyncio import iscoroutinefunction
-except ImportError:
-    def iscoroutinefunction(*args, **kwargs):
-        return False
-
-if sys.version_info[:2] >= (3, 5):
-    from ._handle_coroutine import handle_coroutine
-else:
-    def handle_coroutine(*args, **kwags):
-        raise NotImplementedError('Not implemented on Python 2')
 
 
 log = logging.getLogger(__name__)
