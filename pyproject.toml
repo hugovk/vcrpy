@@ -51,7 +51,6 @@ tests = [
     "requests>=2.22.0",
     "tornado",
     "urllib3",
-    "werkzeug==2.0.3",
 ]
 
 [tool.setuptools]
